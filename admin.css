@@ -1,0 +1,211 @@
+/* ==========================================================================
+   HR JEWELLERS & SONS — STANDALONE BOUTIQUE ADMINISTRATION STYLING
+   ========================================================================== */
+
+body.admin-body {
+  background: var(--ivory) !important;
+  color: var(--text-dark);
+  font-family: var(--font-sans), sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.admin-page-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 40px 20px 80px 20px;
+}
+
+.admin-brand-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.admin-brand-header .monogram {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--maroon);
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.admin-brand-header .monogram::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: var(--gold);
+  margin: 8px auto 0 auto;
+}
+
+.admin-brand-header h1 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 0.15em;
+  color: var(--maroon-deep);
+  margin: 15px 0 5px 0;
+  text-transform: uppercase;
+}
+
+.admin-brand-header p {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.login-form-panel {
+  box-shadow: 0 20px 40px rgba(42, 24, 16, 0.08);
+  background: var(--white);
+  border-radius: 4px;
+  animation: adminFadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid var(--border-gold);
+  position: relative;
+}
+
+.passcode-input-box:focus {
+  background: rgba(74, 15, 28, 0.06) !important;
+  border-color: var(--gold-light) !important;
+  box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+}
+
+.file-upload-drag-area.dragover {
+  border-color: var(--gold-light) !important;
+  background: rgba(201, 168, 76, 0.08) !important;
+}
+
+/* Inventory Item Row in Admin List */
+.admin-inventory-item {
+  display: grid;
+  grid-template-columns: 70px 1.5fr 1fr 1fr auto;
+  gap: 15px;
+  align-items: center;
+  padding: 12px 15px;
+  background: rgba(74, 15, 28, 0.02);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: 3px;
+  transition: all var(--transition-fast);
+}
+
+.admin-inventory-item:hover {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.03);
+  box-shadow: 0 4px 12px rgba(42, 24, 16, 0.03);
+  transform: translateY(-1px);
+}
+
+.admin-item-thumb {
+  width: 70px;
+  height: 60px;
+  border-radius: 2px;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  object-fit: cover;
+  background: var(--ivory);
+}
+
+.admin-item-info h5 {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--maroon-deep);
+  font-weight: 600;
+  margin-bottom: 2px;
+  margin-top: 0;
+}
+
+.admin-item-info p {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  margin: 0;
+}
+
+.admin-item-category {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  background: rgba(201, 168, 76, 0.12);
+  color: #a0802c;
+  text-align: center;
+  border-radius: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.admin-item-category.silver {
+  background: rgba(42, 24, 16, 0.05);
+  color: var(--text-dark);
+}
+
+.admin-item-category.bridal {
+  background: rgba(107, 26, 42, 0.08);
+  color: var(--maroon-light);
+}
+
+.admin-item-weight-val {
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  font-weight: 500;
+}
+
+.btn-remove-item {
+  background: none;
+  border: 1px solid rgba(107, 26, 42, 0.3);
+  color: var(--maroon);
+  padding: 6px 10px;
+  font-size: 0.68rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: 2px;
+}
+
+.btn-remove-item:hover {
+  background: var(--maroon);
+  border-color: var(--maroon);
+  color: var(--white);
+}
+
+/* Animations */
+@keyframes adminFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Customization for Admin Panel */
+@media (max-width: 992px) {
+  .admin-grid-layout {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-inventory-item {
+    grid-template-columns: 60px 1.5fr 1fr auto !important;
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+  
+  .admin-inventory-item .admin-item-weight-val {
+    display: none !important;
+  }
+  
+  .admin-item-thumb {
+    width: 60px !important;
+    height: 50px !important;
+  }
+  
+  .admin-item-info h5 {
+    font-size: 0.85rem !important;
+  }
+}
