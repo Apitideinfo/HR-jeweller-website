@@ -213,6 +213,164 @@ document.addEventListener('DOMContentLoaded', () => {
   initInventory();
 
   // ==========================================================================
+  // 0.05 EXHIBITION VAULT LIGHT/DARK THEME CONTROLLER
+  // ==========================================================================
+  function initVaultMode() {
+    const vaultToggle = document.getElementById('vault-toggle');
+    if (!vaultToggle) return;
+
+    // Load theme preference from localStorage or default to false (Royal Ivory)
+    const isVaultMode = localStorage.getItem('hr_vault_mode') === 'true';
+    if (isVaultMode) {
+      document.body.classList.add('vault-mode');
+    }
+
+    vaultToggle.addEventListener('click', () => {
+      const active = document.body.classList.toggle('vault-mode');
+      localStorage.setItem('hr_vault_mode', active);
+    });
+  }
+  
+  // Run Vault theme initialization
+  initVaultMode();
+
+  // ==========================================================================
+  // 0.08 CUSTOM GOLDEN CURSOR TRACKER & INTERACTIVE HOVER MORPHING
+  // ==========================================================================
+  function initCustomCursor() {
+    const cursor = document.getElementById('custom-cursor');
+    if (!cursor) return;
+
+    window.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Event delegation for highly robust, dynamic hover states
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target.closest('a, button, .feat-card, .catalogue-card, .filter-btn, .config-pill, .color-dot, .thumb-nav-btn');
+      if (target) {
+        cursor.classList.add('hover');
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      const target = e.target.closest('a, button, .feat-card, .catalogue-card, .filter-btn, .config-pill, .color-dot, .thumb-nav-btn');
+      if (target) {
+        cursor.classList.remove('hover');
+      }
+    });
+  }
+
+  // Run Custom Cursor initialization
+  initCustomCursor();
+
+  // ==========================================================================
+  // 0.09 SHIMMERING GOLDEN DUST CANVAS ANIMATION OVERLAY
+  // ==========================================================================
+  function initHeroSparkles() {
+    const canvas = document.getElementById('hero-sparks-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationFrameId;
+
+    // Resize canvas
+    function resizeCanvas() {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      canvas.width = parent.clientWidth * window.devicePixelRatio;
+      canvas.height = parent.clientHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+        // Stagger spawn heights on initial load
+        this.y = Math.random() * (canvas.clientHeight || 500);
+      }
+
+      reset() {
+        const cw = canvas.clientWidth || window.innerWidth;
+        const ch = canvas.clientHeight || 500;
+        this.x = Math.random() * cw;
+        this.y = ch + 10;
+        this.size = Math.random() * 1.8 + 0.6; // Tiny specks
+        this.speedY = Math.random() * 0.4 + 0.15; // Slow drift
+        this.speedX = Math.random() * 0.2 - 0.1; // Gentle sway
+        this.opacity = Math.random() * 0.5 + 0.2;
+        this.growing = Math.random() > 0.5;
+        this.pulse = Math.random() * 0.015 + 0.005;
+      }
+
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+
+        // Dynamic twinkle
+        if (this.growing) {
+          this.opacity += this.pulse;
+          if (this.opacity >= 0.85) this.growing = false;
+        } else {
+          this.opacity -= this.pulse;
+          if (this.opacity <= 0.15) this.growing = true;
+        }
+
+        // Out of bounds reset
+        const cw = canvas.clientWidth || window.innerWidth;
+        if (this.y < -10 || this.x < -10 || this.x > cw + 10) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        
+        ctx.fillStyle = '#C9A84C'; // Warm gold
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = '#C9A84C';
+        
+        // Draw elegant 4-point diamond star shape
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y - this.size * 1.5);
+        ctx.lineTo(this.x + this.size * 0.7, this.y);
+        ctx.lineTo(this.x, this.y + this.size * 1.5);
+        ctx.lineTo(this.x - this.size * 0.7, this.y);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Populate particles
+    const particleCount = 45;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    // Animation Loop
+    function animate() {
+      const cw = canvas.clientWidth || window.innerWidth;
+      const ch = canvas.clientHeight || 500;
+      ctx.clearRect(0, 0, cw, ch);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      animationFrameId = requestAnimationFrame(animate);
+    }
+    animate();
+  }
+
+  // Run Hero Sparkles initialization
+  initHeroSparkles();
+
+  // ==========================================================================
   // 0.1 DYNAMIC COLLECTION CATEGORIES REGISTRY & SEED LAYER
   // ==========================================================================
 
@@ -666,6 +824,14 @@ Thank you.`;
 
         bookingForm.style.display = 'none';
         bookingSuccessBox.style.display = 'flex';
+
+        // Re-trigger wax seal stamp animation
+        const seal = bookingSuccessBox.querySelector('.success-monogram');
+        if (seal) {
+          seal.classList.remove('wax-seal');
+          void seal.offsetWidth; // Force browser reflow/repaint
+          seal.classList.add('wax-seal');
+        }
 
         // Re-enable and reset button states
         bookingSubmitBtn.disabled = false;
@@ -1988,6 +2154,173 @@ Thank you.`;
       }
     }
   });
+
+  // ==========================================================================
+  // 1.5 DYNAMIC HERO ASYMMETRIC SLIDER CONTROLLER
+  // ==========================================================================
+  function initHeroAsymmetricSlider() {
+    const heroImage = document.getElementById('hero-interactive-img');
+    const thumbBtns = document.querySelectorAll('.thumb-nav-btn');
+    const topBadgeVal = document.querySelector('.badge-top-right .badge-value');
+    const bottomBadgeVal = document.querySelector('.badge-bottom-left .badge-value');
+    
+    if (!heroImage || thumbBtns.length === 0) return;
+    
+    thumbBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('active')) return;
+        
+        // Remove active class from all buttons
+        thumbBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const targetImg = btn.getAttribute('data-img');
+        const targetAlt = btn.getAttribute('data-alt');
+        const targetPurity = btn.getAttribute('data-purity');
+        const targetCraft = btn.getAttribute('data-craft');
+        
+        // Fade out
+        heroImage.classList.add('fade-out');
+        
+        setTimeout(() => {
+          heroImage.src = targetImg;
+          heroImage.alt = targetAlt;
+          if (topBadgeVal) topBadgeVal.textContent = targetPurity;
+          if (bottomBadgeVal) bottomBadgeVal.textContent = targetCraft;
+          
+          // Fade in
+          heroImage.classList.remove('fade-out');
+        }, 350);
+      });
+    });
+  }
+  
+  // Initialize dynamic hero slider
+  initHeroAsymmetricSlider();
+
+  // ==========================================================================
+  // 1.58 CARD SPOTLIGHT EFFECTS (LUXURY GLOW TRACKING)
+  // ==========================================================================
+  function initCardSpotlights() {
+    document.addEventListener('mousemove', (e) => {
+      const card = e.target.closest('.catalogue-card, .bridal-card, .feat-card');
+      if (!card) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  }
+  
+  // Initialize card spotlights
+  initCardSpotlights();
+
+  // ==========================================================================
+  // 17. LEGACY GUESTBOOK TESTIMONIAL CAROUSEL CONTROLLER
+  // ==========================================================================
+  function initGuestbookSlider() {
+    const track = document.getElementById('guestbook-slider-track');
+    const prevBtn = document.getElementById('guestbook-prev-btn');
+    const nextBtn = document.getElementById('guestbook-next-btn');
+    const counter = document.getElementById('guestbook-counter');
+    
+    if (!track || !prevBtn || !nextBtn || !counter) return;
+    
+    const slides = track.querySelectorAll('.guestbook-slide');
+    let currentSlide = 0;
+    
+    function updateGuestbook(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+      currentSlide = index;
+      
+      const displayNum = String(currentSlide + 1).padStart(2, '0');
+      counter.textContent = `${displayNum} / ${String(slides.length).padStart(2, '0')}`;
+    }
+    
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let index = currentSlide - 1;
+      if (index < 0) index = slides.length - 1;
+      updateGuestbook(index);
+    });
+    
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let index = currentSlide + 1;
+      if (index >= slides.length) index = 0;
+      updateGuestbook(index);
+    });
+  }
+  
+  // Initialize Guestbook Slider
+  initGuestbookSlider();
+
+  // ==========================================================================
+  // 18. INTERACTIVE LUXURY MAP & SHOWROOM VIEW SWITCHER CONTROLLER
+  // ==========================================================================
+  function initMapSwitcher() {
+    const switchBtns = document.querySelectorAll('.view-switch-btn');
+    const mapIframe = document.querySelector('.contact-map-iframe');
+    const showroomImg = document.querySelector('.contact-map-img');
+    const zoomControls = document.querySelector('.map-zoom-controls');
+    
+    if (!switchBtns.length || !mapIframe || !showroomImg) return;
+    
+    switchBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons
+        switchBtns.forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        const targetView = btn.getAttribute('data-view');
+        
+        if (targetView === 'map') {
+          mapIframe.classList.add('active');
+          showroomImg.classList.remove('active');
+          if (zoomControls) zoomControls.style.display = 'flex';
+        } else {
+          mapIframe.classList.remove('active');
+          showroomImg.classList.add('active');
+          if (zoomControls) zoomControls.style.display = 'none';
+        }
+      });
+    });
+
+    // Zoom Buttons click events (Dynamic iframe z-parameter update)
+    let currentZoom = 16;
+    const plusBtn = document.querySelector('.zoom-btn.btn-plus');
+    const minusBtn = document.querySelector('.zoom-btn.btn-minus');
+    
+    if (plusBtn && minusBtn) {
+      plusBtn.addEventListener('click', () => {
+        if (currentZoom < 20) {
+          currentZoom++;
+          updateMapZoom();
+        }
+      });
+      
+      minusBtn.addEventListener('click', () => {
+        if (currentZoom > 12) {
+          currentZoom--;
+          updateMapZoom();
+        }
+      });
+    }
+    
+    function updateMapZoom() {
+      if (!mapIframe) return;
+      const baseUrl = "https://maps.google.com/maps?q=HR%20House,%20Gopal%20Bazar,%20Moti%20Dungri,%20Jaipur,%20Rajasthan%20302001&t=&ie=UTF8&iwloc=&output=embed";
+      mapIframe.src = `${baseUrl}&z=${currentZoom}`;
+    }
+  }
+  
+  // Initialize Map & Showroom Switcher
+  initMapSwitcher();
 
   // Handle first-time page load and default fallbacks (triggered at the very end to prevent Temporal Dead Zone ReferenceErrors)
   const initialHash = window.location.hash;
