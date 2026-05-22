@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="styles.css?v=2.0">
 </head>
 <body>
+  <!-- Custom Golden Ring Cursor -->
+  <div id="custom-cursor" class="luxury-cursor"></div>
 
   <!-- ── STICKY/FIXED HEADER WRAPPER (Ticker + Navbar) ── -->
   <div class="fixed-header-wrapper">
@@ -57,6 +59,19 @@
           <li><a href="#page-collections" id="nav-item-blog">BLOG</a></li>
           <li><a href="#page-contact" id="nav-item-contact">CONTACT</a></li>
         </ul>
+
+        <!-- Exhibition Vault Toggle Switch -->
+        <div class="vault-toggle-container">
+          <button id="vault-toggle" class="vault-toggle-btn" aria-label="Toggle Exhibition Vault Mode">
+            <span class="vault-toggle-track">
+              <span class="vault-toggle-thumb">
+                <span class="vault-toggle-icon icon-light">☀️</span>
+                <span class="vault-toggle-icon icon-dark">🌙</span>
+              </span>
+            </span>
+            <span class="vault-toggle-text">EXHIBITION VAULT</span>
+          </button>
+        </div>
 
         <!-- Navbar Appointment CTA Button (Screenshot Match: Outline BOOK VISIT with Calendar Icon) -->
         <div class="nav-cta-container">
@@ -116,9 +131,10 @@
          ========================================== -->
     <section id="page-home" class="page-section active">
       
-        <!-- Premium Static Hero Section (High-Fidelity Match) -->
+      <!-- Premium Asymmetrical Hero Section -->
       <div id="hero" class="static-hero-section">
         <div class="hero-bg-zoom"></div>
+        <canvas id="hero-sparks-canvas" class="hero-sparks-canvas"></canvas>
         <div class="hero-particles">
           <span class="sparkle sp-1">✦</span>
           <span class="sparkle sp-2">✦</span>
@@ -128,22 +144,68 @@
           <span class="sparkle sp-6">✦</span>
         </div>
         <div class="hero-overlay-blend"></div>
-        <div class="hero-content-center">
-          <span class="hero-eyebrow">✦ SHOWROOM SHOWCASE &amp; PRIVATE CATALOGUE</span>
-          <h1 class="hero-title">
-            Timeless Jewellery<br>
-            Crafted with Heritage
-          </h1>
-          <p class="hero-subtitle">
-            Experience the legacy of finest gold, silver, and bridal masterpieces designed for life's<br>
-            golden milestones. Exclusively curated for offline sales and private previews.
-          </p>
-          <div class="hero-btn-group">
-            <a href="#page-collections" class="btn-hero-solid">EXPLORE COLLECTION</a>
-            <a href="#page-appointment" class="btn-hero-outline">BOOK VISIT</a>
-            <a href="#page-contact" class="btn-hero-outline">CONTACT US</a>
+        
+        <div class="hero-asymmetric-container">
+          <!-- Left Column: Content and Statistics -->
+          <div class="hero-left-content">
+            <span class="hero-eyebrow">✦ SHOWROOM SHOWCASE &amp; PRIVATE CATALOGUE</span>
+            <h1 class="hero-title">
+              Timeless Jewellery<br>
+              Crafted with Heritage
+            </h1>
+            <p class="hero-subtitle">
+              Experience the legacy of finest gold, silver, and bridal masterpieces designed for life's golden milestones. Exclusively curated for offline sales and private previews.
+            </p>
+            <div class="hero-btn-group">
+              <a href="#page-collections" class="btn-hero-solid">EXPLORE COLLECTION</a>
+              <a href="#page-appointment" class="btn-hero-outline">BOOK VISIT</a>
+              <a href="#page-contact" class="btn-hero-outline">CONTACT US</a>
+            </div>
+            
+            <!-- Elegant Trust Badges inside Hero -->
+            <div class="hero-stats-row">
+              <div class="hero-stat-badge">
+                <span class="stat-num">73+</span>
+                <span class="stat-label">Years Legacy</span>
+              </div>
+              <div class="hero-stat-badge">
+                <span class="stat-num">100%</span>
+                <span class="stat-label">BIS Hallmarked</span>
+              </div>
+              <div class="hero-stat-badge">
+                <span class="stat-num">JAIPUR</span>
+                <span class="stat-label">Heritage Rooted</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right Column: Visual Frame Showcase -->
+          <div class="hero-right-showcase">
+            <div class="hero-showcase-frame">
+              <div class="frame-border-outer"></div>
+              <div class="frame-border-inner"></div>
+              <img src="bridal_jewellery.png" id="hero-interactive-img" class="hero-showcase-img" alt="Royal Kundan Choker">
+              
+              <!-- Floating Dynamic Metadata Badges -->
+              <div class="floating-meta-badge badge-top-right">
+                <span class="badge-tag">AUTHENTIC</span>
+                <span class="badge-value">22KT Gold</span>
+              </div>
+              <div class="floating-meta-badge badge-bottom-left">
+                <span class="badge-tag">EXQUISITE</span>
+                <span class="badge-value">Jaipur Craft</span>
+              </div>
+              
+              <!-- Interactive Thumbnails -->
+              <div class="hero-thumb-navigation">
+                <span class="thumb-nav-btn active" data-img="bridal_jewellery.png" data-alt="Royal Kundan Choker" data-purity="22KT Gold" data-craft="Jaipur Craft"></span>
+                <span class="thumb-nav-btn" data-img="showroom_masterpiece.png" data-alt="Temple Nakshi Necklace" data-purity="22KT Nakshi" data-craft="Temple Nakshi"></span>
+                <span class="thumb-nav-btn" data-img="silver_catalogue.png" data-alt="Victorian Silver Kada" data-purity="92.5 Sterling" data-craft="Sterling Silver"></span>
+              </div>
+            </div>
           </div>
         </div>
+
         <div class="hero-scroll-indicator">
           <span class="scroll-diamond">♦</span>
           <span class="scroll-text">SCROLL TO EXPERIENCE</span>
@@ -1717,6 +1779,89 @@
 
         </div>
       </div>
+
+      <!-- ── LEGACY GUESTBOOK TESTIMONIAL LEDGER ── -->
+      <div id="guestbook" class="guestbook-section">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-eyebrow">
+              <div class="eyebrow-line"></div>
+              <span class="eyebrow-text">THE GUESTBOOK</span>
+              <div class="eyebrow-line"></div>
+            </div>
+            <h2 class="section-title">Words from <em>Our Noble Patrons</em></h2>
+            <div class="divider">
+              <div class="divider-gem"></div>
+            </div>
+            <p class="section-desc">Handwritten entries in our physical showroom ledger from prominent families across generations.</p>
+          </div>
+
+          <div class="guestbook-ledger-wrapper">
+            <div class="ledger-spine"></div>
+            
+            <!-- Left Page: The Dedication -->
+            <div class="ledger-page ledger-page-left">
+              <div class="ledger-page-inner">
+                <div class="ledger-header-gold">
+                  <div class="ledger-crest">HR</div>
+                  <div class="ledger-sub-crest">JAIPUR</div>
+                </div>
+                <h3 class="ledger-page-title">A Sacred Trust</h3>
+                <p class="ledger-page-text">"Purity has been our family's singular promise since 1952. In these pages lie the handwritten blessings and testimonies of families who have trusted us with their bridal dowries, ancestral exchanges, and auspicious milestones for over three generations."</p>
+                <div class="ledger-sign-off">— The House of Harinarji</div>
+              </div>
+            </div>
+
+            <!-- Right Page: The Testimonials Cursive Slider -->
+            <div class="ledger-page ledger-page-right">
+              <div class="ledger-page-inner">
+                
+                <div class="guestbook-slider-container">
+                  <div class="guestbook-slider-track" id="guestbook-slider-track">
+                    
+                    <!-- Slide 1 -->
+                    <div class="guestbook-slide active">
+                      <div class="cursive-quote">"We have purchased our daughter's bridal kundan choker from Harinarji. The purity of the gold, the detailed meenakari work, and the absolute transparency in weights has won our family's lifetime loyalty. Truly the finest family jewelers in Rajasthan."</div>
+                      <div class="patron-details">
+                        <span class="patron-name">Smt. Rajshree Devi Rathore</span>
+                        <span class="patron-family">Thikana Mandawa Family</span>
+                      </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="guestbook-slide">
+                      <div class="cursive-quote">"Generations of my family have trusted HR Jewellers for all gold ornaments. Their guaranteed 100% BIS hallmark stamp and direct value buy-back policy is unmatched. In an industry of complex charges, their honesty shines brighter than gold."</div>
+                      <div class="patron-details">
+                        <span class="patron-name">Shri Arvind Kumar Vyas</span>
+                        <span class="patron-family">Johri Bazar Elite Club</span>
+                      </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="guestbook-slide">
+                      <div class="cursive-quote">"The sterling silver puja articles and idols we ordered for our new home are of archival museum quality. The repoussé floral details represent true Jaipuri craftsmanship at its peak. May your honest values continue for centuries."</div>
+                      <div class="patron-details">
+                        <span class="patron-name">Smt. Anjali Mehra</span>
+                        <span class="patron-family">Civil Lines Jaipur</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Ledger Slider Navigation Controls -->
+                <div class="guestbook-nav">
+                  <button class="guestbook-nav-btn prev-btn" id="guestbook-prev-btn" aria-label="Previous Entry">←</button>
+                  <span class="guestbook-counter" id="guestbook-counter">01 / 03</span>
+                  <button class="guestbook-nav-btn next-btn" id="guestbook-next-btn" aria-label="Next Entry">→</button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ==========================================
@@ -1920,7 +2065,14 @@
                     <line x1="12" y1="20" x2="12" y2="4"/>
                     <line x1="6" y1="20" x2="6" y2="14"/>
                   </svg>
-                  <span>DAILY METAL RATES</span>
+                  <div class="rates-live-badge-wrapper">
+                    <span>DAILY METAL RATES</span>
+                    <div class="live-pulse-container">
+                      <span class="live-pulse-dot"></span>
+                      <span class="live-pulse-ring"></span>
+                      <span class="live-pulse-text">LIVE</span>
+                    </div>
+                  </div>
                 </div>
                 <div class="rates-update-stamp">
                   <span>Updated on 21 May 2026, 10:30 AM</span>
@@ -2242,14 +2394,17 @@
               <!-- Showroom Hours -->
               <h4 class="showroom-hours-title">SHOWROOM HOURS</h4>
               <div class="showroom-hours-capsule">
-                <div class="hours-capsule-section">
-                  <span class="hours-label-day">Mon – Sat</span>
-                  <span class="hours-value-time">11:00 AM – 8:30 PM</span>
+                <div class="hours-main-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="vertical-align: middle;">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span>MON – SAT</span>
                 </div>
-                <div class="hours-capsule-divider"></div>
-                <div class="hours-capsule-section">
-                  <span class="hours-label-day">Sunday</span>
-                  <a href="#page-appointment" class="hours-appointment-btn">By Appointment Only</a>
+                <div class="hours-slot">11:00 AM – 8:30 PM</div>
+                <div class="hours-slot-closed">
+                  <span>SUNDAY :</span>
+                  <a href="#page-appointment" class="btn-appointment-hours">By Appointment Only</a>
                 </div>
               </div>
 
@@ -2257,54 +2412,54 @@
               <div class="showroom-services-bar">
                 <!-- Valet Parking -->
                 <div class="service-bar-item">
-                  <div class="service-icon">
+                  <div class="service-bar-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="1" y="3" width="22" height="13" rx="2" ry="2" />
                       <path d="M16 8h4M4 8h4M8 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
                     </svg>
                   </div>
-                  <div class="service-text">
-                    <div class="service-title">VALET PARKING</div>
-                    <div class="service-subtitle">Available</div>
+                  <div>
+                    <div class="service-bar-label">VALET PARKING</div>
+                    <div class="service-bar-desc">Available</div>
                   </div>
                 </div>
                 <!-- Private Lounge -->
                 <div class="service-bar-item">
-                  <div class="service-icon">
+                  <div class="service-bar-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" />
                       <path d="M3 20h18" />
                     </svg>
                   </div>
-                  <div class="service-text">
-                    <div class="service-title">PRIVATE LOUNGE</div>
-                    <div class="service-subtitle">Consultation</div>
+                  <div>
+                    <div class="service-bar-label">PRIVATE LOUNGE</div>
+                    <div class="service-bar-desc">Consultation</div>
                   </div>
                 </div>
                 <!-- 100% Secure -->
                 <div class="service-bar-item">
-                  <div class="service-icon">
+                  <div class="service-bar-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                       <path d="M9 11l2 2 4-4" />
                     </svg>
                   </div>
-                  <div class="service-text">
-                    <div class="service-title">100% SECURE</div>
-                    <div class="service-subtitle">And Trusted</div>
+                  <div>
+                    <div class="service-bar-label">100% SECURE</div>
+                    <div class="service-bar-desc">And Trusted</div>
                   </div>
                 </div>
                 <!-- BIS Certified -->
                 <div class="service-bar-item">
-                  <div class="service-icon">
+                  <div class="service-bar-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="7" />
                       <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
                     </svg>
                   </div>
-                  <div class="service-text">
-                    <div class="service-title">BIS CERTIFIED</div>
-                    <div class="service-subtitle">100% Hallmark</div>
+                  <div>
+                    <div class="service-bar-label">BIS CERTIFIED</div>
+                    <div class="service-bar-desc">100% Hallmark</div>
                   </div>
                 </div>
               </div>
@@ -2335,19 +2490,37 @@
                   </svg>
                 </div>
 
+                <!-- Interactive Switcher Tab -->
+                <div class="map-view-switcher">
+                  <button type="button" class="view-switch-btn active" data-view="map">
+                    ♦ INTERACTIVE MAP
+                  </button>
+                  <button type="button" class="view-switch-btn" data-view="showroom">
+                    ♦ SHOWROOM PREVIEW
+                  </button>
+                </div>
+
                 <!-- Map Block with Mockup and Zoom Overlay -->
-                <div class="map-block-container">
-                  <img src="contact_map_mockup.png" alt="Jaipur Gopal Bazar Map Grid" class="map-mockup-img">
+                <div class="contact-map-wrapper">
+                  <!-- Live Google Maps iframe with Luxury Filter -->
+                  <iframe src="https://maps.google.com/maps?q=HR%20House,%20Gopal%20Bazar,%20Moti%20Dungri,%20Jaipur,%20Rajasthan%20302001&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                          class="contact-map-iframe active" 
+                          allowfullscreen="" 
+                          loading="lazy" 
+                          referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  
+                  <!-- Sneak peek Showroom image -->
+                  <img src="diamond_lounge.png" alt="HR Jewellers & Sons - Private Fitting Lounge" class="contact-map-img">
                   
                   <!-- Zoom Controls Absolute Overlay -->
                   <div class="map-zoom-controls">
-                    <button type="button" class="zoom-btn btn-plus">+</button>
-                    <button type="button" class="zoom-btn btn-minus">-</button>
+                    <button type="button" class="zoom-btn btn-plus" title="Zoom In">+</button>
+                    <button type="button" class="zoom-btn btn-minus" title="Zoom Out">-</button>
                   </div>
                 </div>
 
                 <!-- Bottom Guide Details -->
-                <div class="guide-info-block">
+                <div class="contact-guide-content">
                   <div class="guide-title-row">
                     <div class="guide-title-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="#B3913B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -2355,12 +2528,12 @@
                         <circle cx="12" cy="10" r="3" />
                       </svg>
                     </div>
-                    <h4 class="guide-card-title">Showroom Location Guide</h4>
+                    <h4 class="guide-title-text">Showroom Location Guide</h4>
                   </div>
-                  <p class="guide-card-text">We are centrally located in the heart of Jaipur's Gopal Bazar, just minutes away from Moti Dungri Temple and City Palace. Easily accessible by car, cab or public transport.</p>
+                  <p class="guide-desc-text">We are centrally located in the heart of Jaipur's Gopal Bazar, just minutes away from Moti Dungri Temple and City Palace. Easily accessible by car, cab or public transport.</p>
                   
                   <!-- Navigate Button -->
-                  <a href="https://maps.google.com/?q=HR+House,+Gopal+Bazar,+Moti+Dungri,+Jaipur,+Rajasthan+302001" class="guide-navigate-btn" target="_blank">
+                  <a href="https://maps.google.com/?q=HR+House,+Gopal+Bazar,+Moti+Dungri,+Jaipur,+Rajasthan+302001" class="btn-navigate-showroom" target="_blank">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12" style="margin-right: 6px; vertical-align: middle;">
                       <path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/>
                     </svg>
@@ -2481,7 +2654,7 @@
 
                 <!-- Confirmation success box panel -->
                 <div class="luxury-form-success" id="booking-success-box" style="display:none;">
-                  <div class="success-monogram">HR</div>
+                  <div class="success-monogram wax-seal">HR</div>
                   <h4>Reservation Request Logged</h4>
                   <p>Dear <span id="success-client-name" class="gold-text">Customer</span>, we have successfully logged your booking request for a <span id="success-client-focus" class="gold-text">Bridal Ensemble</span> on <span id="success-client-date" class="gold-text">Preferred Date</span>.</p>
                   <p style="font-size: 0.82rem; margin-top: 10px; color: var(--text-light);">Our showroom coordinator will call you shortly on <span id="success-client-phone" class="gold-text">Phone</span> to verify slot availability, clear entry permissions, and arrange valet guidelines.</p>

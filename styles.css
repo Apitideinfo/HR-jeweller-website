@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ── 1. GOOGLE FONTS IMPORT ── */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;500;600;700;800;900&family=Jost:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;500;600;700;800;900&family=Jost:wght@200;300;400;500;600;700&family=Pinyon+Script&display=swap');
 
 /* ── 2. CORE LUXURY VARIABLES ── */
 :root {
@@ -33,6 +33,7 @@
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-display: 'Cinzel', serif;
   --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-handwritten: 'Pinyon Script', cursive;
   
   /* Borders & Spacing */
   --border-gold: rgba(201, 168, 76, 0.3);
@@ -46,6 +47,47 @@
 
   --nav-height: 85px;
   --max-width: 1300px;
+}
+
+/* Exhibition Vault Mode (Luxury Dark Override) */
+body.vault-mode {
+  --ivory: #0B0605;        /* Deep obsidian base */
+  --white: #130B09;        /* Velvet box card base */
+  --beige: #1A100E;        /* Subtle slate divider */
+  --beige-mid: #2C1F1C;    /* Mid-level dark border */
+  --text-dark: #F5EFEB;    /* Soft silk-white primary text */
+  --text-mid: #C8B9B5;     /* Warm linen secondary text */
+  --text-light: #9B887B;   /* Bronze accent text */
+  --maroon-deep: #E2C472;  /* Shimmering gold headings! */
+  --maroon: #E2C472;       /* Shimmering gold subheaders! */
+  --maroon-light: #F0DFA0;
+  --border-gold: rgba(201, 168, 76, 0.4);
+
+  /* Bluestone overrides for luxury theme consistency */
+  --bluestone-bg: #130B09;
+  --bluestone-sec-bg: #1A100E;
+  --bluestone-teal: #C9A84C;
+  --bluestone-teal-light: #DFBF64;
+  --bluestone-teal-glow: rgba(201, 168, 76, 0.2);
+  --bluestone-border: rgba(201, 168, 76, 0.2);
+  --bluestone-dark: #F5EFEB;
+  --bluestone-mid: #C8B9B5;
+  --bluestone-gray: #1A100E;
+}
+
+/* Dynamic Smooth Transition for Vault Mode */
+body, 
+h1, h2, h3, h4, h5, h6, 
+p, a, span, button, input, select, textarea,
+.feat-card, .catalogue-card, .nav-inner, header, footer, section, .page-section,
+.fixed-header-wrapper, .live-gold-ticker, .trust-horizontal-ribbon, .m-feature-card,
+.booking-form-container, .booking-success-container {
+  transition: background-color var(--transition-medium), 
+              border-color var(--transition-medium), 
+              color var(--transition-medium), 
+              box-shadow var(--transition-medium),
+              opacity var(--transition-medium),
+              transform var(--transition-medium);
 }
 
 /* ── 3. BASE & GLOBAL STYLES ── */
@@ -282,9 +324,99 @@ section {
   color: var(--maroon-deep);
 }
 
-/* ── 7. HEADER NAVIGATION BAR ──
-   Consolidated into a single block at the bottom of the stylesheet (Line 4039+)
-   to prevent conflicting layout rules and ensure optimal positioning. */
+/* ── Exhibition Vault Toggle Styling ── */
+.vault-toggle-container {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
+}
+
+.vault-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 30px;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  background: rgba(201, 168, 76, 0.05);
+  transition: all var(--transition-fast);
+}
+
+.vault-toggle-btn:hover {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.1);
+  box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+}
+
+.vault-toggle-track {
+  width: 48px;
+  height: 24px;
+  background: var(--maroon-deep);
+  border-radius: 20px;
+  position: relative;
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  transition: all var(--transition-fast);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+
+body.vault-mode .vault-toggle-track {
+  background: #25120E;
+}
+
+.vault-toggle-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  position: absolute;
+  left: 3px;
+  transition: transform var(--transition-fast) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+body.vault-mode .vault-toggle-thumb {
+  transform: translateX(24px);
+  background: linear-gradient(135deg, var(--white), var(--gold-pale));
+}
+
+.vault-toggle-icon {
+  font-size: 10px;
+  position: absolute;
+  transition: opacity var(--transition-fast);
+}
+
+.vault-toggle-icon.icon-dark {
+  opacity: 0;
+}
+
+body.vault-mode .vault-toggle-icon.icon-light {
+  opacity: 0;
+}
+
+body.vault-mode .vault-toggle-icon.icon-dark {
+  opacity: 1;
+}
+
+.vault-toggle-text {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--gold-light);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+body.vault-mode .vault-toggle-text {
+  color: var(--text-dark);
+}
 
 .nav-inner {
   max-width: var(--max-width);
@@ -1621,11 +1753,21 @@ section {
 }
 
 .luxury-form-panel {
-  background: var(--beige);
-  border: 1px solid var(--border-gold-solid);
-  padding: 3rem 2.5rem;
-  position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: var(--white) !important;
+  /* Luxurious leather texture styling */
+  background-image: radial-gradient(rgba(0,0,0,0.18) 1px, transparent 0),
+                    radial-gradient(rgba(0,0,0,0.18) 1px, transparent 0) !important;
+  background-size: 8px 8px !important;
+  background-position: 0 0, 4px 4px !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35) !important;
+  
+  /* Dual gold border */
+  border: 1px solid var(--border-gold-solid) !important;
+  outline: 4px double var(--gold) !important;
+  outline-offset: -10px !important;
+  padding: 4rem 3.5rem !important;
+  position: relative !important;
+  border-radius: 4px !important;
 }
 
 .luxury-form-header {
@@ -1741,6 +1883,63 @@ section {
   align-items: center;
   justify-content: center;
   margin-bottom: 5px;
+}
+
+/* Premium Red Wax Seal Animation */
+.success-monogram.wax-seal {
+  background: radial-gradient(circle, #c0392b 0%, #7f0808 100%) !important;
+  color: #F5EFEB !important;
+  border: 2px solid #a31d1d !important;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.7), 
+              0 8px 20px rgba(0,0,0,0.5),
+              0 0 0 3px #7f0808,
+              0 0 20px rgba(192, 57, 43, 0.4) !important;
+  border-radius: 50% !important;
+  width: 90px !important;
+  height: 90px !important;
+  font-family: 'Cinzel', serif !important;
+  font-size: 2.3rem !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto 1.5rem auto !important;
+  position: relative !important;
+  text-shadow: 1px 2px 3px rgba(0,0,0,0.8) !important;
+  transform: scale(0) rotate(-45deg) !important;
+  opacity: 0 !important;
+  animation: stamp-wax-seal 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards !important;
+}
+
+.success-monogram.wax-seal::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 4px !important;
+  border: 1px dashed rgba(245, 239, 235, 0.4) !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+}
+
+@keyframes stamp-wax-seal {
+  0% {
+    transform: scale(2.8) rotate(-80deg) !important;
+    opacity: 0 !important;
+    filter: blur(2px);
+  }
+  65% {
+    transform: scale(0.92) rotate(8deg) !important;
+    opacity: 1 !important;
+    filter: none;
+  }
+  100% {
+    transform: scale(1) rotate(0deg) !important;
+    opacity: 1 !important;
+    filter: none;
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.75), 
+                0 6px 16px rgba(0,0,0,0.6),
+                0 0 0 4px #7f0808,
+                0 0 25px rgba(192, 57, 43, 0.65) !important;
+  }
 }
 
 .luxury-form-success h4 {
@@ -3249,6 +3448,17 @@ body {
   border-color: var(--bluestone-teal) !important;
   color: var(--bluestone-teal) !important;
   font-weight: 600 !important;
+  position: relative !important;
+  padding-left: 18px !important;
+}
+
+.config-pill.active::before {
+  content: "✓" !important;
+  position: absolute !important;
+  left: 6px !important;
+  font-weight: 900 !important;
+  font-size: 0.65rem !important;
+  color: var(--bluestone-teal) !important;
 }
 
 /* Color Circle Dots */
@@ -3261,6 +3471,9 @@ body {
   transition: all var(--transition-fast) !important;
   border: 1.5px solid transparent !important;
   box-shadow: inset 0 0 2px rgba(0,0,0,0.1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .color-dot.yellow-gold { background-color: #E2C472 !important; }
@@ -3275,6 +3488,18 @@ body {
   border-color: var(--bluestone-teal) !important;
   transform: scale(1.25) !important;
   box-shadow: 0 0 6px var(--bluestone-teal-glow) !important;
+}
+
+.color-dot.active::after {
+  content: "✓" !important;
+  font-size: 8px !important;
+  color: #130B09 !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+.color-dot.rose-gold.active::after {
+  color: #FFFFFF !important;
 }
 
 /* Card Improvements */
@@ -3659,6 +3884,16 @@ body {
   100% {
     transform: scale(1.08) translate(1%, -0.5%);
   }
+}
+
+.hero-sparks-canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
 }
 
 /* ── LUXURY FLOATING PARTICLES (GOLD DUST) ── */
@@ -6201,11 +6436,23 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
 }
 
-.contact-map-img {
+.contact-map-iframe, .contact-map-img {
+  position: absolute !important;
+  inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
+  border: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.5s ease, visibility 0.5s ease, filter var(--transition-medium) !important;
+  z-index: 1 !important;
   object-fit: cover !important;
-  opacity: 0.95 !important;
+}
+
+.contact-map-iframe.active, .contact-map-img.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 2 !important;
 }
 
 /* Absolute zoom widgets on map card */
@@ -6311,8 +6558,137 @@ body {
   box-shadow: 0 8px 25px rgba(179, 145, 59, 0.4) !important;
 }
 
+/* ==========================================================================
+   Google Maps Premium Iframe Filters
+   ========================================================================== */
+/* Light Mode: Elegant antique gold/sepia blend */
+body:not(.vault-mode) .contact-map-iframe {
+  filter: grayscale(0.9) sepia(0.2) contrast(0.95) saturate(1.1) brightness(0.98) !important;
+}
+
+/* Dark Mode (Vault Mode): Deep obsidian gold-threaded blend */
+body.vault-mode .contact-map-iframe {
+  filter: grayscale(1) invert(0.9) sepia(0.35) hue-rotate(330deg) saturate(1.5) contrast(0.9) brightness(0.85) !important;
+}
+
+/* Luxury View Switcher for Showroom Card */
+.map-view-switcher {
+  display: flex !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(201, 168, 76, 0.25) !important;
+  border-radius: 30px !important;
+  padding: 4px !important;
+  margin-bottom: 1.5rem !important;
+  z-index: 5 !important;
+  position: relative !important;
+  width: 100% !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+body:not(.vault-mode) .map-view-switcher {
+  background: rgba(74, 15, 28, 0.03) !important;
+  border-color: rgba(201, 168, 76, 0.4) !important;
+}
+
+.view-switch-btn {
+  flex: 1 !important;
+  background: transparent !important;
+  border: none !important;
+  color: rgba(250, 246, 238, 0.7) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  padding: 10px 16px !important;
+  border-radius: 20px !important;
+  cursor: pointer !important;
+  transition: all var(--transition-fast) !important;
+}
+
+body:not(.vault-mode) .view-switch-btn {
+  color: var(--text-mid) !important;
+}
+
+.view-switch-btn:hover {
+  color: #FAF6EE !important;
+}
+
+body:not(.vault-mode) .view-switch-btn:hover {
+  color: var(--maroon-deep) !important;
+}
+
+.view-switch-btn.active {
+  background: var(--gold) !important;
+  color: var(--maroon-deep) !important;
+  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.25) !important;
+}
+
+body:not(.vault-mode) .view-switch-btn.active {
+  background: var(--maroon) !important;
+  color: #FAF6EE !important;
+  box-shadow: 0 4px 12px rgba(74, 15, 28, 0.15) !important;
+}
 
 /* ==========================================================================
+   Vault Mode Overrides for Contact page elements
+   ========================================================================== */
+body.vault-mode .contact-card-new {
+  background: var(--white) !important;
+  border-color: rgba(201, 168, 76, 0.2) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.vault-mode .contact-card-new:hover {
+  border-color: var(--gold) !important;
+  box-shadow: 0 12px 35px rgba(201, 168, 76, 0.1) !important;
+}
+
+body.vault-mode .contact-card-icon-box {
+  background: rgba(201, 168, 76, 0.05) !important;
+  border-right-color: rgba(201, 168, 76, 0.2) !important;
+}
+
+body.vault-mode .contact-card-value {
+  color: var(--text-dark) !important;
+}
+
+body.vault-mode .contact-card-value a {
+  color: var(--text-dark) !important;
+}
+
+body.vault-mode .contact-card-value a:hover {
+  color: var(--gold-light) !important;
+}
+
+body.vault-mode .showroom-hours-capsule {
+  background: var(--white) !important;
+  border-color: rgba(201, 168, 76, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+body.vault-mode .hours-slot {
+  color: var(--text-dark) !important;
+}
+
+body.vault-mode .showroom-services-bar {
+  background: var(--white) !important;
+  border-color: rgba(201, 168, 76, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+body.vault-mode .service-bar-item:not(:last-child) {
+  border-right-color: rgba(201, 168, 76, 0.15) !important;
+}
+
+body.vault-mode .service-bar-label {
+  color: var(--text-dark) !important;
+}
+
+body.vault-mode .service-bar-desc {
+  color: var(--text-mid) !important;
+}
+
+/* ==========================================================================================
    16. MEDIA QUERIES / RESPONSIVENESS OVERRIDES
    ========================================================================== */
 
@@ -6541,5 +6917,656 @@ body {
   transform: translateY(8px) !important;
 }
 
+/* ── ASYMMETRICAL LUXURY HERO SECTION STYLING ── */
+.hero-asymmetric-container {
+  display: grid !important;
+  grid-template-columns: 1.15fr 0.85fr !important;
+  gap: 3rem !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  max-width: var(--max-width) !important;
+  margin: 0 auto !important;
+  padding: 0 2rem !important;
+}
 
+.hero-left-content {
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
 
+.hero-left-content .hero-title {
+  text-align: left !important;
+  line-height: 1.15 !important;
+  font-size: clamp(2.3rem, 4.2vw, 3.8rem) !important;
+  margin-bottom: 1.2rem !important;
+}
+
+.hero-left-content .hero-subtitle {
+  text-align: left !important;
+  margin-bottom: 2rem !important;
+  max-width: 550px !important;
+  font-size: 0.95rem !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.hero-left-content .hero-btn-group {
+  justify-content: flex-start !important;
+  margin-bottom: 2.5rem !important;
+}
+
+.hero-stats-row {
+  display: flex !important;
+  gap: 2.2rem !important;
+  border-top: 1px solid rgba(201, 168, 76, 0.18) !important;
+  padding-top: 1.8rem !important;
+  width: 100% !important;
+  max-width: 500px !important;
+}
+
+.hero-stat-badge {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.hero-stat-badge .stat-num {
+  font-family: var(--font-serif) !important;
+  font-size: 1.8rem !important;
+  font-weight: 500 !important;
+  color: var(--gold-light) !important;
+  line-height: 1.2 !important;
+}
+
+.hero-stat-badge .stat-label {
+  font-family: var(--font-sans) !important;
+  font-size: 0.62rem !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  margin-top: 2px !important;
+}
+
+/* Right Column: Visual Frame Showcase */
+.hero-right-showcase {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.hero-showcase-frame {
+  position: relative !important;
+  width: 360px !important;
+  height: 450px !important;
+  border-radius: 4px !important;
+}
+
+.frame-border-outer {
+  position: absolute !important;
+  inset: -12px !important;
+  border: 1px solid rgba(201, 168, 76, 0.25) !important;
+  border-radius: 6px !important;
+  pointer-events: none !important;
+  animation: pulseOuter 4s ease-in-out infinite !important;
+}
+
+.frame-border-inner {
+  position: absolute !important;
+  inset: -4px !important;
+  border: 1px solid rgba(201, 168, 76, 0.15) !important;
+  border-radius: 5px !important;
+  pointer-events: none !important;
+}
+
+.frame-border-outer::before,
+.frame-border-outer::after {
+  content: '' !important;
+  position: absolute !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-color: var(--gold) !important;
+  border-style: solid !important;
+}
+
+.frame-border-outer::before {
+  top: -1px !important;
+  left: -1px !important;
+  border-width: 2px 0 0 2px !important;
+  border-radius: 4px 0 0 0 !important;
+}
+
+.frame-border-outer::after {
+  bottom: -1px !important;
+  right: -1px !important;
+  border-width: 0 2px 2px 0 !important;
+  border-radius: 0 0 4px 0 !important;
+}
+
+.hero-showcase-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 4px !important;
+  display: block !important;
+  filter: brightness(0.92) saturate(1.1) contrast(1.05) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+
+.hero-showcase-img.fade-out {
+  opacity: 0 !important;
+  transform: scale(0.98) !important;
+}
+
+@keyframes pulseOuter {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.015);
+    opacity: 1;
+    border-color: rgba(201, 168, 76, 0.45) !important;
+  }
+}
+
+/* Floating Dynamic Metadata Badges */
+.floating-meta-badge {
+  position: absolute !important;
+  background: rgba(26, 5, 8, 0.82) !important;
+  border: 1px solid rgba(201, 168, 76, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-radius: 4px !important;
+  padding: 8px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  z-index: 3 !important;
+}
+
+.badge-top-right {
+  top: 30px !important;
+  right: -30px !important;
+  animation: floatY 5s ease-in-out infinite !important;
+}
+
+.badge-bottom-left {
+  bottom: 50px !important;
+  left: -35px !important;
+  animation: floatY 5s ease-in-out infinite 1.5s !important;
+}
+
+.badge-tag {
+  font-family: var(--font-sans) !important;
+  font-size: 0.58rem !important;
+  font-weight: 500 !important;
+  color: var(--gold) !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+}
+
+.badge-value {
+  font-family: var(--font-serif) !important;
+  font-size: 0.95rem !important;
+  color: var(--ivory) !important;
+  margin-top: 1px !important;
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Interactive Thumbnails */
+.hero-thumb-navigation {
+  position: absolute !important;
+  bottom: -32px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  gap: 12px !important;
+  z-index: 5 !important;
+  background: rgba(26, 5, 8, 0.65) !important;
+  padding: 6px 12px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(201, 168, 76, 0.2) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.thumb-nav-btn {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: rgba(201, 168, 76, 0.35) !important;
+  cursor: pointer !important;
+  transition: all var(--transition-fast) !important;
+  border: 1px solid transparent !important;
+}
+
+.thumb-nav-btn:hover {
+  background: var(--gold-light) !important;
+}
+
+.thumb-nav-btn.active {
+  background: var(--gold) !important;
+  transform: scale(1.2) !important;
+  box-shadow: 0 0 8px var(--gold) !important;
+}
+
+/* Mobile responsive layout */
+@media (max-width: 991px) {
+  .hero-asymmetric-container {
+    grid-template-columns: 1fr !important;
+    gap: 4rem !important;
+    text-align: center !important;
+    padding-top: 40px !important;
+  }
+  .hero-left-content {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .hero-left-content .hero-title,
+  .hero-left-content .hero-subtitle {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .hero-left-content .hero-btn-group {
+    justify-content: center !important;
+  }
+  .hero-stats-row {
+    justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .hero-showcase-frame {
+    width: 300px !important;
+    height: 380px !important;
+  }
+  .badge-top-right {
+    right: -10px !important;
+  }
+  .badge-bottom-left {
+    left: -10px !important;
+  }
+}
+
+/* ── CUSTOM LUXURY GOLDEN CURSOR ── */
+.luxury-cursor {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background-color 0.3s, border-radius 0.3s, transform 0.3s;
+  background-color: transparent;
+  mix-blend-mode: difference; /* Highly premium color inversion */
+}
+
+/* On hover of premium links or actions */
+.luxury-cursor.hover {
+  width: 24px;
+  height: 24px;
+  background-color: rgba(201, 168, 76, 0.15);
+  border-color: var(--gold-light);
+  border-radius: 4px; /* Morph into diamond/square */
+  transform: translate(-50%, -50%) rotate(45deg); /* Diamond shape! */
+}
+
+/* Hide on mobile devices */
+@media (max-width: 991px) {
+  .luxury-cursor {
+    display: none !important;
+  }
+}
+
+/* ── LUXURY CARD SPOTLIGHT GLOW ── */
+.catalogue-card, .bridal-card, .feat-card {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.catalogue-card::after, .bridal-card::after, .feat-card::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201, 168, 76, 0.08), transparent 80%) !important;
+  opacity: 0 !important;
+  transition: opacity 0.4s ease !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+.catalogue-card:hover::after, .bridal-card:hover::after, .feat-card:hover::after {
+  opacity: 1 !important;
+}
+
+body.vault-mode .catalogue-card::after,
+body.vault-mode .bridal-card::after,
+body.vault-mode .feat-card::after {
+  background: radial-gradient(circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201, 168, 76, 0.16), transparent 75%) !important;
+}
+
+/* ── DAILY METAL RATES LIVE PULSE STYLE ── */
+.rates-live-badge-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.live-pulse-container {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: rgba(46, 204, 113, 0.12) !important;
+  border: 1px solid rgba(46, 204, 113, 0.3) !important;
+  padding: 2px 8px 2px 6px !important;
+  border-radius: 4px !important;
+  gap: 6px !important;
+  font-size: 0.62rem !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  color: #2ECC71 !important;
+  position: relative !important;
+}
+
+.live-pulse-dot {
+  width: 6px !important;
+  height: 6px !important;
+  background-color: #2ECC71 !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+.live-pulse-ring {
+  border: 2px solid #2ECC71 !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  position: absolute !important;
+  left: 3px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translateY(-50%) scale(0.5);
+    opacity: 0.8;
+  }
+  80%, 100% {
+    transform: translateY(-50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* ── LEGACY GUESTBOOK LEDGER STYLES ── */
+.guestbook-section {
+  background-color: var(--ivory) !important;
+  padding: 6rem 0 !important;
+  position: relative !important;
+}
+
+.guestbook-ledger-wrapper {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  background: #fdfaf2 !important;
+  border: 1px solid #C9A84C !important;
+  box-shadow: 0 30px 70px rgba(42, 24, 16, 0.08) !important;
+  position: relative !important;
+  max-width: 1000px !important;
+  margin: 4rem auto 0 auto !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  min-height: 480px !important;
+}
+
+body.vault-mode .guestbook-ledger-wrapper {
+  background: #1C110E !important;
+  border-color: rgba(201, 168, 76, 0.3) !important;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.5) !important;
+}
+
+.ledger-spine {
+  position: absolute !important;
+  left: 50% !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 16px !important;
+  transform: translateX(-50%) !important;
+  background: linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0.02) 20%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0.02) 80%, rgba(0,0,0,0.15)) !important;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.2) !important;
+  z-index: 10 !important;
+  background-color: #6B1A2A !important;
+  border-left: 1px solid rgba(201,168,76,0.3) !important;
+  border-right: 1px solid rgba(201,168,76,0.3) !important;
+}
+
+body.vault-mode .ledger-spine {
+  background-color: #0B0605 !important;
+}
+
+.ledger-page {
+  padding: 3.5rem 3rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  position: relative !important;
+}
+
+.ledger-page-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  justify-content: space-between !important;
+  position: relative !important;
+}
+
+.ledger-header-gold {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.ledger-crest {
+  font-family: var(--font-display) !important;
+  font-size: 1.4rem !important;
+  color: #C9A84C !important;
+  border: 1px double #C9A84C !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+}
+
+.ledger-sub-crest {
+  font-family: var(--font-sans) !important;
+  font-size: 0.55rem !important;
+  color: #C9A84C !important;
+  letter-spacing: 0.2em !important;
+  margin-top: 4px !important;
+}
+
+.ledger-page-title {
+  font-family: var(--font-serif) !important;
+  font-size: 1.6rem !important;
+  color: var(--maroon-deep) !important;
+  text-align: center !important;
+  margin-bottom: 1rem !important;
+  font-weight: 500 !important;
+}
+
+.ledger-page-text {
+  font-family: var(--font-serif) !important;
+  font-size: 0.95rem !important;
+  color: var(--text-mid) !important;
+  line-height: 1.7 !important;
+  text-align: center !important;
+  font-style: italic !important;
+}
+
+.ledger-sign-off {
+  font-family: var(--font-serif) !important;
+  font-size: 0.85rem !important;
+  color: var(--gold) !important;
+  text-align: center !important;
+  margin-top: 1.5rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Right page: Cursive slider */
+.guestbook-slider-container {
+  position: relative !important;
+  flex-grow: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  min-height: 220px !important;
+}
+
+.guestbook-slider-track {
+  width: 100% !important;
+  position: relative !important;
+  height: 100% !important;
+}
+
+.guestbook-slide {
+  position: absolute !important;
+  inset: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(15px) !important;
+  transition: opacity 0.5s ease, transform 0.5s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.guestbook-slide.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+}
+
+.cursive-quote {
+  font-family: var(--font-handwritten) !important;
+  font-size: 1.8rem !important;
+  color: var(--text-dark) !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+  padding: 0 0.5rem !important;
+}
+
+body.vault-mode .cursive-quote {
+  color: #FAF6EE !important;
+  text-shadow: 0 0 1px rgba(255,255,255,0.1) !important;
+}
+
+.patron-details {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.patron-name {
+  font-family: var(--font-serif) !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  color: var(--maroon-deep) !important;
+  letter-spacing: 0.05em !important;
+}
+
+.patron-family {
+  font-family: var(--font-sans) !important;
+  font-size: 0.65rem !important;
+  color: var(--gold) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+}
+
+.guestbook-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1.5rem !important;
+  margin-top: auto !important;
+  padding-top: 1.5rem !important;
+  border-top: 1px solid rgba(201,168,76,0.15) !important;
+}
+
+.guestbook-nav-btn {
+  background: transparent !important;
+  border: 1px solid var(--gold) !important;
+  color: var(--gold) !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.8rem !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.guestbook-nav-btn:hover {
+  background: var(--gold) !important;
+  color: var(--white) !important;
+}
+
+.guestbook-counter {
+  font-family: var(--font-sans) !important;
+  font-size: 0.75rem !important;
+  color: var(--text-light) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Responsive styles for Guestbook */
+@media (max-width: 768px) {
+  .guestbook-ledger-wrapper {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+    max-width: 100% !important;
+    margin-top: 2rem !important;
+  }
+  
+  .ledger-spine {
+    display: none !important;
+  }
+
+  .ledger-page-left {
+    border-bottom: 1px solid rgba(201,168,76,0.2) !important;
+  }
+  
+  .ledger-page {
+    padding: 2.5rem 1.5rem !important;
+  }
+  
+  .cursive-quote {
+    font-size: 1.5rem !important;
+  }
+}
